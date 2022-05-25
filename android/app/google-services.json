@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "698444437693",
+    "project_id": "fb-auth-provider-6850e",
+    "storage_bucket": "fb-auth-provider-6850e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698444437693:android:df83cf9d6375100053ffd4",
+        "android_client_info": {
+          "package_name": "com.example.sangwook_firebase_authentication_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698444437693-grhi8usik982v1ssrd9ue86m6r3i6kl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXfFHCzt-iF6iJMG_79UoFWXLm1w6b-V0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698444437693-grhi8usik982v1ssrd9ue86m6r3i6kl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
