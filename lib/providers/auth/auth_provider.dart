@@ -21,7 +21,7 @@ class AuthProvider with ChangeNotifier {
     } else {
       _state = _state.copyWith(authStatus: AuthStatus.unauthenticated);
     }
-    logger.d('auth_provider.dart ${StackTrace.current}\nauthState: $_state');
+    logger.d('auth_provider.dart\nauthState: $_state');
     notifyListeners();
   }
 
