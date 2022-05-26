@@ -12,7 +12,7 @@ import 'pages/splash_page.dart';
 import 'providers/auth/auth_provider.dart';
 import 'repositories/auth_repository.dart';
 
-void main() async {
+void main() {
   runApp(const MyApp());
 }
 
@@ -21,51 +21,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasError) {
-            return Scaffold(
-              body: Center(
-                child: Text('Something went wrong'),
+      future: Firebase.initializeApp(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text('Something went wrong'),
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MultiProvider(
+            providers: [
+              Provider<AuthRepository>(
+                create: (context) => AuthRepository(
+                    firebaseFirestore: FirebaseFirestore.instance,
+                    firebaseAuth: fb_auth.FirebaseAuth.instance),
               ),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            return MultiProvider(
-              providers: [
-                Provider<AuthRepository>(
-                  create: (context) => AuthRepository(
-                      firebaseFirestore: FirebaseFirestore.instance,
-                      firebaseAuth: fb_auth.FirebaseAuth.instance),
-                ),
-                StreamProvider<fb_auth.User?>(
-                  create: (context) => context.read<AuthRepository>().user,
-                  initialData: null,
-                ),
-                ChangeNotifierProxyProvider<fb_auth.User?, AuthProvider>(
-                  create: (context) =>
-                      AuthProvider(context.read<AuthRepository>()),
-                  update: (BuildContext context, fb_auth.User? userStream,
-                          AuthProvider? authProvider) =>
-                      authProvider!..update(userStream),
-                ),
-              ],
-              child: MaterialApp(
-                title: 'Auth Provider',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                ),
-                home: SplashPage(),
-                routes: {
-                  SignupPage.routeName: (context) => SignupPage(),
-                  SigninPage.routeName: (context) => SigninPage(),
-                  HomePage.routeName: (context) => HomePage(),
-                },
+              StreamProvider<fb_auth.User?>(
+                create: (context) => context.read<AuthRepository>().user,
+                initialData: null,
               ),
-            );
-          }
-          return CupertinoActivityIndicator();
-        });
+              ChangeNotifierProxyProvider<fb_auth.User?, AuthProvider>(
+                create: (context) =>
+                    AuthProvider(context.read<AuthRepository>()),
+                update: (BuildContext context, fb_auth.User? userStream,
+                        AuthProvider? authProvider) =>
+                    authProvider!..update(userStream),
+              ),
+            ],
+            child: MaterialApp(
+              title: 'Auth Provider',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: SplashPage(),
+              routes: {
+                SignupPage.routeName: (context) => SignupPage(),
+                SigninPage.routeName: (context) => SigninPage(),
+                HomePage.routeName: (context) => HomePage(),
+              },
+            ),
+          );
+        }
+        return CupertinoActivityIndicator();
+      },
+    );
   }
 }
