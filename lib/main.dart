@@ -1,5 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'pages/home_page.dart';
+import 'pages/signin_page.dart';
+import 'pages/signup_page.dart';
+import 'pages/splash_page.dart';
+import 'providers/auth/auth_provider.dart';
+import 'repositories/auth_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,63 +19,38 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return MultiProvider(
+      providers: [
+        Provider<AuthRepository>(
+          create: (context) => AuthRepository(
+              firebaseFirestore: FirebaseFirestore.instance,
+              firebaseAuth: fb_auth.FirebaseAuth.instance),
         ),
+        StreamProvider<fb_auth.User?>(
+          create: (context) => context.read<AuthRepository>().user,
+          initialData: null,
+        ),
+        ChangeNotifierProxyProvider<fb_auth.User?, AuthProvider>(
+          create: (context) => AuthProvider(context.read<AuthRepository>()),
+          update: (BuildContext context, fb_auth.User? userStream,
+                  AuthProvider? authProvider) =>
+              authProvider!..update(userStream),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Auth Provider',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SplashPage(),
+        routes: {
+          SignupPage.routeName: (context) => SignupPage(),
+          SigninPage.routeName: (context) => SigninPage(),
+          HomePage.routeName: (context) => HomePage(),
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
