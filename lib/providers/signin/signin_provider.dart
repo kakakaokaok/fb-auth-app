@@ -8,7 +8,7 @@ class SigninProvider with ChangeNotifier {
   SigninState _state = SigninState.initial();
 
   SigninProvider(this.authRepository);
-  SigninState get staet => _state;
+  SigninState get state => _state;
 
   final AuthRepository authRepository;
 
