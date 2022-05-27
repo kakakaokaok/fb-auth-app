@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sangwook_firebase_authentication_app/providers/signin/signin_provider.dart';
 
 import 'pages/home_page.dart';
 import 'pages/signin_page.dart';
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
                 update: (BuildContext context, fb_auth.User? userStream,
                         AuthProvider? authProvider) =>
                     authProvider!..update(userStream),
+              ),
+              ChangeNotifierProvider<SigninProvider>(
+                create: (context) =>
+                    SigninProvider(context.read<AuthRepository>()),
               ),
             ],
             child: MaterialApp(
