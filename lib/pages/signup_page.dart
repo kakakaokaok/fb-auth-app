@@ -56,6 +56,7 @@ class _SignupPageState extends State<SignupPage> {
               key: _formKey,
               autovalidateMode: _autovalidateMode,
               child: ListView(
+                reverse: true,
                 shrinkWrap: true,
                 children: [
                   Image.asset(
@@ -155,7 +156,7 @@ class _SignupPageState extends State<SignupPage> {
                             : _submit,
                     child: signupState.signupStatus == SignupStatus.submitting
                         ? CupertinoActivityIndicator()
-                        : Text('Sign Un'),
+                        : Text('Sign Up'),
                     style: ElevatedButton.styleFrom(
                       textStyle: TextStyle(
                         fontSize: 20,
@@ -180,7 +181,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                   )
-                ],
+                ].reversed.toList(),
               ),
             ),
           ),
