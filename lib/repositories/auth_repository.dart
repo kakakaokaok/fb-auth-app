@@ -52,7 +52,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> singin({
+  Future<void> signin({
     required String email,
     required String password,
   }) async {

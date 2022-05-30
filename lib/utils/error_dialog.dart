@@ -16,7 +16,9 @@ void errorDialog(BuildContext context, CustomError e) {
           actions: [
             CupertinoDialogAction(
               child: Text('OK'),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         );
@@ -31,7 +33,9 @@ void errorDialog(BuildContext context, CustomError e) {
           content: Text(e.plugin + '\n' + e.message),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Text('OK'),
             ),
           ],

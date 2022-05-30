@@ -11,6 +11,7 @@ import 'pages/signin_page.dart';
 import 'pages/signup_page.dart';
 import 'pages/splash_page.dart';
 import 'providers/auth/auth_provider.dart';
+import 'providers/signup/signup_provider.dart';
 import 'repositories/auth_repository.dart';
 
 void main() {
@@ -53,6 +54,10 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider<SigninProvider>(
                 create: (context) =>
                     SigninProvider(context.read<AuthRepository>()),
+              ),
+              ChangeNotifierProvider<SignupProvider>(
+                create: (context) =>
+                    SignupProvider(context.read<AuthRepository>()),
               ),
             ],
             child: MaterialApp(
