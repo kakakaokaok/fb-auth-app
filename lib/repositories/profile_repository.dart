@@ -3,6 +3,7 @@ import 'package:sangwook_firebase_authentication_app/constants/db_constants.dart
 import 'package:sangwook_firebase_authentication_app/models/custom_error.dart';
 
 import '../models/user_model.dart';
+import '../utils/logger.dart';
 
 class ProfileRepository {
   final FirebaseFirestore firebaseFirestore;
@@ -12,6 +13,7 @@ class ProfileRepository {
     try {
       final DocumentSnapshot userDoc = await usersRef.doc(uid).get();
       final User currentUser = User.fromDoc(userDoc);
+      logger.d(currentUser);
 
       return currentUser;
     } on FirebaseException catch (e) {
@@ -24,7 +26,7 @@ class ProfileRepository {
       throw CustomError(
         code: 'Exception',
         message: e.toString(),
-        plugin: 'flutter_error/server_error',
+        plugin: 'flutter_error/server_error\n(profile_repository.dart)',
       );
     }
   }

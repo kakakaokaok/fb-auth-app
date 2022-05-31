@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../models/custom_error.dart';
 
 void errorDialog(BuildContext context, CustomError e) {
-  if (Platform.isIOS) {
+  if (!Platform.isIOS) {
     showCupertinoDialog(
       context: context,
       builder: (context) {

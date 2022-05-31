@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import '../providers/profile/profile_provider.dart';
 import '../providers/profile/profile_state.dart';
 import '../utils/error_dialog.dart';
+import '../utils/logger.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -29,11 +30,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _getProfile() {
     final String uid = context.read<fb_auth.User?>()!.uid;
+    logger.d('profile_page.dart\nuid: $uid');
 
     /// initState에서 async 함수를 호출하는 건 UI에 inconsistency를 야기시킬 수 있기 때문에
     /// 현재 프레임이 끝나고 호출될 수 있도록 아래와 같이
     /// addPostFrameCallback 내에서 실행함
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      /// Firestore Database에 데이터가 없다. 왜?
+      /// 로그인도 했는데??
+      /// SignupPage로 간다
       context.read<ProfileProvider>().getProfile(uid);
     });
   }
