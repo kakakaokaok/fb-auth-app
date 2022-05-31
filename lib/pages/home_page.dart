@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              icon: Icon(Icons.exit_to_app),
+              icon: Icon(Icons.account_circle),
             ),
           ],
         ),
