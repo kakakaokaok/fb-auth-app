@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 
 import '../constants/db_constants.dart';
 import '../models/custom_error.dart';
-import '../models/user_model.dart';
 import '../utils/logger.dart';
 
 class AuthRepository {
