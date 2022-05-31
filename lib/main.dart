@@ -10,8 +10,10 @@ import 'pages/signin_page.dart';
 import 'pages/signup_page.dart';
 import 'pages/splash_page.dart';
 import 'providers/auth/auth_provider.dart';
+import 'providers/profile/profile_provider.dart';
 import 'providers/signup/signup_provider.dart';
 import 'repositories/auth_repository.dart';
+import 'repositories/profile_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +35,9 @@ class MyApp extends StatelessWidget {
               firebaseFirestore: FirebaseFirestore.instance,
               firebaseAuth: fb_auth.FirebaseAuth.instance),
         ),
+        Provider<ProfileRepository>(
+          create: (context) => ProfileRepository(FirebaseFirestore.instance),
+        ),
         StreamProvider<fb_auth.User?>(
           create: (context) => context.read<AuthRepository>().user,
           initialData: null,
@@ -48,6 +53,11 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SignupProvider>(
           create: (context) => SignupProvider(context.read<AuthRepository>()),
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (context) => ProfileProvider(
+            context.read<ProfileRepository>(),
+          ),
         ),
       ],
       child: MaterialApp(
