@@ -6,6 +6,7 @@ import '../../utils/logger.dart';
 import 'auth_state.dart';
 
 class AuthProvider extends StateNotifier<AuthState> with LocatorMixin {
+  /// LocatorMixin을 통해 다른 Provider에 쉽게 접근이 가능함
   AuthProvider() : super(AuthState.unknown());
 
   @override

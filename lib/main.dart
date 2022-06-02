@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:sangwook_firebase_authentication_app/providers/signin/signin_state.dart';
 
 import 'pages/home_page.dart';
 import 'pages/signin_page.dart';
@@ -47,8 +48,11 @@ class MyApp extends StatelessWidget {
         StateNotifierProvider<AuthProvider, AuthState>(
           create: (context) => AuthProvider(),
         ),
-        ChangeNotifierProvider<SigninProvider>(
-          create: (context) => SigninProvider(context.read<AuthRepository>()),
+
+        /// StateNotifier의 타입 뿐만 아니라
+        /// StateNotifier에서 handling하는 state 타입도 지정
+        StateNotifierProvider<SigninProvider, SigninState>(
+          create: (context) => SigninProvider(),
         ),
         ChangeNotifierProvider<SignupProvider>(
           create: (context) => SignupProvider(context.read<AuthRepository>()),
