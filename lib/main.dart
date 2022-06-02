@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:sangwook_firebase_authentication_app/providers/signin/signin_state.dart';
+import 'package:sangwook_firebase_authentication_app/providers/signup/signup_state.dart';
 
 import 'pages/home_page.dart';
 import 'pages/signin_page.dart';
@@ -54,8 +55,8 @@ class MyApp extends StatelessWidget {
         StateNotifierProvider<SigninProvider, SigninState>(
           create: (context) => SigninProvider(),
         ),
-        ChangeNotifierProvider<SignupProvider>(
-          create: (context) => SignupProvider(context.read<AuthRepository>()),
+        StateNotifierProvider<SignupProvider, SignupState>(
+          create: (context) => SignupProvider(),
         ),
         ChangeNotifierProvider<ProfileProvider>(
           create: (context) => ProfileProvider(
