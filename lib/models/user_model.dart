@@ -20,7 +20,7 @@ class User extends Equatable {
   final String email;
   final String profileImageUrl;
   final int point;
-  final Rank rank;
+  final String rank;
   User({
     required this.id,
     required this.name,
@@ -49,7 +49,7 @@ class User extends Equatable {
       email: '',
       profileImageUrl: '',
       point: -1,
-      rank: Rank.initial,
+      rank: '',
     );
   }
 
