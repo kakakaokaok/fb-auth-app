@@ -24,10 +24,12 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    logger.d('initState');
 
     /// initState에서 context 사용 가능???? 안된다고 했던것 같은데
     profileProv = context.read<ProfileProvider>();
-    _removeListener = profileProv.addListener(errorDialogListner);
+    _removeListener =
+        profileProv.addListener(errorDialogListner, fireImmediately: false);
     _getProfile();
   }
 
@@ -39,21 +41,20 @@ class _ProfilePageState extends State<ProfilePage> {
     /// 현재 프레임이 끝나고 호출될 수 있도록 아래와 같이
     /// addPostFrameCallback 내에서 실행함
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      /// Firestore Database에 데이터가 없다. 왜?
-      /// 로그인도 했는데??
-      /// SignupPage로 간다
-      context.read<ProfileProvider>().getProfile(uid);
+      context.read<ProfileProvider>().getProfile('uid');
     });
   }
 
   void errorDialogListner(ProfileState state) {
     if (state.profileStatus == ProfileStatus.error) {
+      logger.d('errorDialog');
       errorDialog(context, state.error);
     }
   }
 
   @override
   void dispose() {
+    logger.d('dispose');
     // profileProv.removeListener(errorDialogListner);
     _removeListener();
     super.dispose();
@@ -61,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    logger.d('build');
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -112,27 +114,27 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '- id: ${profileState.user.id}',
+                  '- ID: ${profileState.user.id}',
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '- id: ${profileState.user.name}',
+                  '- Name: ${profileState.user.name}',
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '- id: ${profileState.user.email}',
+                  '- Email: ${profileState.user.email}',
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '- id: ${profileState.user.point}',
+                  '- Point: ${profileState.user.point}',
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  '- id: ${profileState.user.rank}',
+                  '- Rank: ${profileState.user.rank}',
                   style: TextStyle(fontSize: 18),
                 ),
               ],
