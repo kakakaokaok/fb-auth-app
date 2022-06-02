@@ -13,7 +13,10 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authState = context.watch<AuthProvider>().state;
+    /// StateNotifier를 사용하기 때문에 state에 access 할때는
+    /// State 타입을 extension method에 준다.
+    /// 그 자체가 state이기 때문에 state getter가 없다.
+    final authState = context.watch<AuthState>();
 
     if (authState.authStatus == AuthStatus.authenticated) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

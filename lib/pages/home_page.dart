@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () {
+                /// signout 메서드는 StateNotifier 자체에 access할 필요가 있기 때문에
+                /// 그대로 둔다
                 context.read<AuthProvider>().signout();
               },
               icon: Icon(Icons.exit_to_app),
