@@ -43,7 +43,8 @@ class _SigninPageState extends State<SigninPage> {
 
   @override
   Widget build(BuildContext context) {
-    final signinState = context.watch<SigninProvider>().state;
+    /// splash_page.dart의 설명 참조
+    final signinState = context.watch<SigninState>();
 
     /// 참조1: https://www.flutterclutter.dev/flutter/tutorials/prevent-back-button-from-closing-the-app/2021/14074/
     /// 참조2: https://protocoderspoint.com/flutter-double-back-press-to-exit-app/
