@@ -18,13 +18,16 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late final ProfileProvider profileProv;
 
+  /// addListner에 return value를 저장할
+  late final void Function() _removeListener;
+
   @override
   void initState() {
     super.initState();
 
     /// initState에서 context 사용 가능???? 안된다고 했던것 같은데
     profileProv = context.read<ProfileProvider>();
-    profileProv.addListener(errorDialogListner);
+    _removeListener = profileProv.addListener(errorDialogListner);
     _getProfile();
   }
 
@@ -43,15 +46,16 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void errorDialogListner() {
-    if (profileProv.state.profileStatus == ProfileStatus.error) {
-      errorDialog(context, profileProv.state.error);
+  void errorDialogListner(ProfileState state) {
+    if (state.profileStatus == ProfileStatus.error) {
+      errorDialog(context, state.error);
     }
   }
 
   @override
   void dispose() {
-    profileProv.removeListener(errorDialogListner);
+    // profileProv.removeListener(errorDialogListner);
+    _removeListener();
     super.dispose();
   }
 
@@ -66,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildProfile() {
-    final profileState = context.watch<ProfileProvider>().state;
+    final profileState = context.watch<ProfileState>();
 
     // if (profileState.profileStatus == ProfileStatus.initial) {
     //   return Container();
